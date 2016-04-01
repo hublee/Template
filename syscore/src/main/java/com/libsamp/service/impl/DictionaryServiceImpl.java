@@ -61,7 +61,7 @@ public class DictionaryServiceImpl extends BaseServiceImpl<DictionaryMapper,Dict
 
     @PostConstruct
     public void initDicMap(){
-        List<Dictionary> dictionaryList =  getList(null);
+        List<Dictionary> dictionaryList =  getList(new Dictionary());
         DicUtil.initDicMap(dictionaryList);
     }
 

@@ -158,4 +158,9 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper,Role> implements
         }
         return resCodes;
     }
+
+    @Override
+    public List<Integer> getUserIdsByRoleId(Integer roleId) {
+        return mapper.selectUserIdsByRoleId(roleId);
+    }
 }

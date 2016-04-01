@@ -3,6 +3,7 @@ package com.libsamp.sql;
 import com.libsamp.entity.RoleResource;
 import com.libsamp.entity.UserRole;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +16,7 @@ public class RoleSqlProvider {
 
     private final String USER_ROLE = "t_user_role";
     private final String ROLE_RES = "t_role_resource";
+    private final String TB_ROLE = "t_role";
 
     public String batchInsertRoleSql(Map<String,Object> param){
         List<UserRole> userRoleList = (List<UserRole>) param.get("userRoles");

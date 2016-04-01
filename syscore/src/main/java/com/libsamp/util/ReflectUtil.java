@@ -1,5 +1,6 @@
 package com.libsamp.util;
 
+import com.libsamp.annotation.Paramable;
 import com.libsamp.entity.ActionLog;
 
 import javax.persistence.Transient;
@@ -66,6 +67,25 @@ public class ReflectUtil {
         }
         return fieldList;
     }
+
+    /**
+     * 获取实体类未持久化且不为空的查询参数
+     * @param clazz
+     * @return
+     */
+    public static List<Field> getParamableFields(Class clazz){
+        List<Field> fieldList = getAllFieldsWithSuper(clazz);
+        List<Field> rtField = new ArrayList<>();
+        for(Field field : fieldList){
+            Paramable paramable = field.getAnnotation(Paramable.class);
+            if(null == paramable || !paramable.value()){
+                continue;
+            }
+            rtField.add(field);
+        }
+        return rtField;
+    }
+
 
     public static void main(String[] args) throws Exception {
         ActionLog actionLog = new ActionLog();

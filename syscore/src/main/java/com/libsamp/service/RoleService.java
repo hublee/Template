@@ -34,4 +34,6 @@ public interface RoleService extends BaseService<Role> {
 
     Set<String> getResCode(Integer roleId);
 
+    List<Integer> getUserIdsByRoleId(Integer roleId);
+
 }

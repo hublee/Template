@@ -15,8 +15,7 @@ import tk.mybatis.mapper.entity.Example;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by hlib on 2015/11/24 0024.
@@ -76,9 +75,37 @@ public abstract class BaseServiceImpl<D extends Mapper<T>,T> implements BaseServ
                     criteria.andEqualTo(field.getName(),field.get(t));
                 }
             }
+
+            //in查询参数
+            List<Field> paramFields = ReflectUtil.getParamableFields(t.getClass());
+            List<Field> params = ReflectUtil.getWithValueNotNull(t,paramFields);
+            Set<String> persiFieldNames = new HashSet<>();
+            for(Field f : persistFields) persiFieldNames.add(f.getName());
+            for(Field f : params){
+                if(f.getType() == List.class){
+                    String inField = f.getName().substring(0, f.getName().length() - 1);
+                    if(Collections.frequency(persiFieldNames, inField) <= 0){
+                        throw new RuntimeException("in条件查询属性【"+inField+"】不存在");
+                    }
+                    criteria.andIn(inField,(List)f.get(t));
+                }
+            }
+            //order
+            String orderBy = "id DESC ";
+            Field fd_order = ReflectionUtils.findField(t.getClass(),"order");
+            if(null != fd_order){
+                fd_order.setAccessible(true);
+                if(null != fd_order.get(t)){
+                    orderBy = fd_order.get(t).toString();
+                }
+            }
+            example.setOrderByClause(orderBy);
+
         }catch (Exception e){
+            log.error("分页查询出错",e);
             e.printStackTrace();
         }
+
         List<T> list = mapper.selectByExample(example);
         PageInfo pageInfo = new PageInfo(list);
         return new Page<>(list,Long.valueOf(pageInfo.getTotal()).intValue(),pageNo,pageSize);
@@ -93,7 +120,60 @@ public abstract class BaseServiceImpl<D extends Mapper<T>,T> implements BaseServ
     }
 
     public List<T> getList(T t){
-        return mapper.select(t);
+        //只查询未被标记删除的数据
+        try{
+            Field fd_del = ReflectionUtils.findField(t.getClass(),"delFlag");
+            if(null != fd_del){
+                fd_del.setAccessible(true);
+                fd_del.set(t,1);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            log.error("分页查询失败",e);
+        }
+        //如果属性类型是 string ，则统一使用模糊查询
+        Example example = new Example(t.getClass());
+        Example.Criteria criteria = example.createCriteria();
+        try {
+            List<Field> persistFields = ReflectUtil.getPersistFields(t.getClass());
+            List<Field> fieldList = ReflectUtil.getWithValueNotNull(t, persistFields);
+            for(Field field : fieldList){
+                if(field.getType() == String.class){
+                    criteria.andLike(field.getName(), "%"+field.get(t)+"%");
+                }else{
+                    criteria.andEqualTo(field.getName(),field.get(t));
+                }
+            }
+            //in查询参数
+            List<Field> paramFields = ReflectUtil.getParamableFields(t.getClass());
+            List<Field> params = ReflectUtil.getWithValueNotNull(t,paramFields);
+            Set<String> persiFieldNames = new HashSet<>();
+            for(Field f : persistFields) persiFieldNames.add(f.getName());
+            for(Field f : params){
+                if(f.getType() == List.class){
+                    String inField = f.getName().substring(0, f.getName().length() - 1);
+                    if(Collections.frequency(persiFieldNames,inField) <= 0){
+                        throw new RuntimeException("in条件查询属性【"+inField+"】不存在");
+                    }
+                    criteria.andIn(inField,(List)f.get(t));
+                }
+            }
+            String orderBy = "id DESC ";
+            Field fd_order = ReflectionUtils.findField(t.getClass(),"order");
+            if(null != fd_order){
+                fd_order.setAccessible(true);
+                if(null != fd_order.get(t)){
+                    orderBy = fd_order.get(t).toString();
+                }
+            }
+            example.setOrderByClause(orderBy);
+        }catch (Exception e){
+            e.printStackTrace();
+            log.error("分页查询出错",e);
+            throw new RuntimeException("分页查询失败",e);
+        }
+        List<T> list = mapper.selectByExample(example);
+        return list;
     }
 
     public T getById(Integer id){

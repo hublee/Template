@@ -54,6 +54,7 @@
         <jetty.version>9.3.0.RC0</jetty.version>
         <template.version>1.0</template.version>
         <jetty.jsp.version>9.2.0.RC0</jetty.jsp.version>
+        <sitemesh.version>2.4.2</sitemesh.version>
     </properties>
 
     <dependencyManagement>
@@ -229,57 +230,10 @@
                 <artifactId>mapper</artifactId>
                 <version>${mapper.version}</version>
             </dependency>
-            <!--<dependency>
-                <groupId>com.github.abel533</groupId>
-                <artifactId>mapper</artifactId>
-                <version>${mapper.version}</version>
-            </dependency>-->
-            <!--<dependency>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-servlet</artifactId>
-                <version>${jetty.version}</version>
-            </dependency>
             <dependency>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-webapp</artifactId>
-                <version>${jetty.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-jsp</artifactId>
-                <version>${jetty.jsp.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.glassfish.web</groupId>
-                <artifactId>javax.servlet.jsp</artifactId>
-                <version>2.2.3</version>
-            </dependency>
-            &lt;!&ndash; EL Support &ndash;&gt;
-            <dependency>
-                <groupId>org.glassfish.web</groupId>
-                <artifactId>javax.el</artifactId>
-                <version>2.2.3</version>
-            </dependency>-->
-
-            <dependency>
-                <groupId>org.eclipse.jetty.aggregate</groupId>
-                <artifactId>jetty-all</artifactId>
-                <version>8.0.4.v20111024</version>
-            </dependency>
-            <dependency>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-webapp</artifactId>
-                <version>8.0.4.v20111024</version>
-            </dependency>
-            <dependency>
-                <groupId>javax.servlet.jsp</groupId>
-                <artifactId>jsp-api</artifactId>
-                <version>2.1.2</version>
-            </dependency>
-            <dependency>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-jsp</artifactId>
-                <version>8.1.18.v20150929</version>
+                <groupId>opensymphony</groupId>
+                <artifactId>sitemesh</artifactId>
+                <version>${sitemesh.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

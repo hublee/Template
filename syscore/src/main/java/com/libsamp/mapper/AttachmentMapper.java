@@ -13,7 +13,6 @@ import java.util.List;
 /**
  * Created by hlib on 2015/8/14 0014.
  */
-@Repository
 public interface AttachmentMapper extends Mapper<Attachment> {
 
     List<Attachment> selectListByIds(List<Integer> ids);

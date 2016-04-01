@@ -32,9 +32,4 @@ public class ActionLogController {
         return logService.getListByPage(actionLog,page,rows);
     }
 
-    public static void main(String[] args){
-        String s = "{statusCode=160043, statusMsg=Ӧԃ\u052Bģ°䨤²»ƥƤ}";
-
-    }
-
 }

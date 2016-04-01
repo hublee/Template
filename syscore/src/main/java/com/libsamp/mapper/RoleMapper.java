@@ -15,7 +15,6 @@ import java.util.List;
 /**
  * Created by hlib on 2015/8/11 0011.
  */
-@Repository
 public interface RoleMapper extends Mapper<Role> {
 
     @Delete("delete from t_user_role where user_id = #{userId}")
@@ -35,4 +34,7 @@ public interface RoleMapper extends Mapper<Role> {
 
     @SelectProvider(type = ResourceSqlProvider.class,method = "getRoleResSql")
     List<Resource> getResourcesByRoleIds(@Param("roleIds")List<Integer> roleIds);
+
+    @Select("select u.user_id from t_role r inner join t_user_role u on(r.id=u.role_id) where u.role_id = #{roleId}")
+    List<Integer> selectUserIdsByRoleId(Integer roleId);
 }

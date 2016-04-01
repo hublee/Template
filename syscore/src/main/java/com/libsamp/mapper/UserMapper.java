@@ -12,7 +12,6 @@ import java.util.List;
 /**
  * Created by hlib on 2015/8/6 0006.
  */
-@Repository
 public interface UserMapper extends Mapper<User> {
 
     @Select("select * from t_user where name = #{name}")

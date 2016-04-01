@@ -48,6 +48,7 @@
                 /css/** = anon
                 /js/** = anon
                 /images/** = anon
+                /media/** = anon
                 /app/**=anon
                 /attaches/**=anon
                 /ueditor/**=anon

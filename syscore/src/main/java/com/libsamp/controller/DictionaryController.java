@@ -4,6 +4,7 @@ import com.libsamp.dto.EasyuiTree;
 import com.libsamp.dto.StatusDTO;
 import com.libsamp.entity.Dictionary;
 import com.libsamp.service.DictionaryService;
+import com.libsamp.util.Page;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,6 +38,11 @@ public class DictionaryController {
         return dictionaryService.getEasyuiTree(null);
     }
 
+    @RequestMapping(value = "listByPage",method = RequestMethod.POST) @ResponseBody
+    public Page listByPage(Dictionary dictionary,Integer page,Integer rows){
+        return dictionaryService.getListByPage(dictionary,page,rows);
+    }
+
     @RequestMapping(value = "saveOrUpdate",method = RequestMethod.POST) @ResponseBody
     public StatusDTO saveOrUpdate(Dictionary dic){
         try{
@@ -65,6 +71,10 @@ public class DictionaryController {
         return new StatusDTO(Boolean.FALSE);
     }
 
+    @RequestMapping(value = "getById/{id}",method = RequestMethod.GET) @ResponseBody
+    public Object getById(@PathVariable("id")Integer id){
+        return dictionaryService.getById(id);
+    }
 
     @RequestMapping(value = "del/{id}",method = RequestMethod.GET) @ResponseBody
     public StatusDTO del(@PathVariable("id")Integer id){
@@ -75,5 +85,12 @@ public class DictionaryController {
             e.printStackTrace();
         }
         return new StatusDTO(Boolean.FALSE);
+    }
+
+    @RequestMapping(value = "getChilds/{pid}",method = RequestMethod.GET) @ResponseBody
+    public Object getByPId(@PathVariable("pid")Integer pid){
+        Dictionary dictionary = new Dictionary();
+        dictionary.setDicPid(pid);
+        return dictionaryService.getList(dictionary);
     }
 }

@@ -14,7 +14,6 @@ import java.util.List;
 /**
  * Created by hlib on 2015/8/20 0020.
  */
-@Repository
 public interface ActionLogMapper extends Mapper<ActionLog> {
 
     @SelectProvider(type = ActionLogSqlProvider.class,method = "getJoinSql")

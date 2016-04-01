@@ -1,10 +1,12 @@
 package com.libsamp.entity;
 
 
+import com.libsamp.annotation.Paramable;
 import com.libsamp.dto.ShiroUser;
 
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import java.util.List;
 
 /**
  * Created by hlib on 2015/8/5 0005.
@@ -27,6 +29,10 @@ public class User extends BaseEntity{
     private String depart; //部门  针对内部用户
 
     private Integer isEnable;
+
+    @Transient
+    @Paramable
+    private List<Integer> ids; //作查询参数
 
     @Transient
     private String newPwd;
@@ -134,6 +140,14 @@ public class User extends BaseEntity{
 
     public void setUserType(Integer userType) {
         this.userType = userType;
+    }
+
+    public List<Integer> getIds() {
+        return ids;
+    }
+
+    public void setIds(List<Integer> ids) {
+        this.ids = ids;
     }
 
     @Override

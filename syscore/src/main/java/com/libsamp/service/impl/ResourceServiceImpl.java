@@ -2,6 +2,7 @@ package com.libsamp.service.impl;
 
 import com.libsamp.annotation.Logable;
 import com.libsamp.dto.EasyuiTree;
+import com.libsamp.dto.ResourceTree;
 import com.libsamp.entity.Resource;
 import com.libsamp.mapper.ResourceMapper;
 import com.libsamp.service.ResourceService;
@@ -70,5 +71,25 @@ public class ResourceServiceImpl extends BaseServiceImpl<ResourceMapper,Resource
             deleteByIds(sids);
         }
         super.deleteById(id);
+    }
+
+    @Override
+    public List<ResourceTree> loadResTree() {
+        List<Resource> resourceList = getList(new Resource());
+        List<ResourceTree> resTree = new ArrayList<>(); //系统目录菜单
+        for(Resource res : resourceList){
+            if(null != res.getPid() && res.getPid() == 0){
+                resTree.add(new ResourceTree(res,new ArrayList<Resource>()));
+            }
+        }
+        /**遍历父菜单找子菜单*/
+        for(ResourceTree parent : resTree){
+            for(Resource child : resourceList){
+                if(child.getPid() == parent.getId()){
+                    parent.getChildren().add(child);
+                }
+            }
+        }
+        return resTree;
     }
 }

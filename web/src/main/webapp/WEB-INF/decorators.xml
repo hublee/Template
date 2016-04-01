@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<decorators defaultdir="/WEB-INF/views2/layout/">
+    <excludes>
+        <pattern>/css/*</pattern>
+        <pattern>/font-awesome/*</pattern>
+        <pattern>/fonts/*</pattern>
+        <pattern>/images/*</pattern>
+        <pattern>/js/*</pattern>
+        <pattern>/app/*</pattern>
+        <pattern>/attaches/*</pattern>
+        <pattern>/login</pattern>
+        <pattern>/logout</pattern>
+        <pattern>/ueditor/*</pattern>
+    </excludes>
+    <decorator name="default" page="default.jsp">
+        <pattern>/index</pattern>
+        <pattern>/common/*</pattern>
+        <pattern>/editor/*</pattern>
+        <pattern>/anchor/*</pattern>
+        <pattern>/tech/*</pattern>
+        <pattern>/customer/*</pattern>
+        <pattern>/image/*</pattern>
+        <pattern>/dataAnaly/*</pattern>
+    </decorator>
+</decorators>

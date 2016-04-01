@@ -8,6 +8,7 @@ import com.libsamp.entity.Resource;
 import com.libsamp.entity.User;
 import com.libsamp.service.ResourceService;
 import com.libsamp.service.RoleService;
+import com.libsamp.util.Page;
 import org.apache.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -42,12 +43,28 @@ public class ResourceController {
         return DIR+"resList";
     }
 
+    /**
+     * 分页查询
+     * @param resource
+     * @param page
+     * @param rows
+     * @return
+     */
+    @RequestMapping(value = "listByPage",method = RequestMethod.POST) @ResponseBody
+    public Page getListByPage(Resource resource,Integer page,Integer rows){
+        return resService.getListByPage(resource,page,rows);
+    }
+
     @RequestMapping(value = "list",method = RequestMethod.POST) @ResponseBody
     public List<EasyuiTree> list(Resource resource){
         List<EasyuiTree> trees = resService.getEasyuiTree(resource);
         return trees;
     }
 
+    @RequestMapping(value = "getById/{id}",method = RequestMethod.GET) @ResponseBody
+    public Object getById(@PathVariable("id")Integer id){
+        return resService.getById(id);
+    }
 
     @RequestMapping(value = "saveOrUpdate",method = RequestMethod.POST) @ResponseBody
     public StatusDTO saveOrUpdate(Resource resource){
@@ -67,6 +84,13 @@ public class ResourceController {
         ShiroUser shiroUser = (ShiroUser) subject.getPrincipal();
         List<ResourceTree> resourceTreeList = roleService.loadResourceTreeByUser(new User(shiroUser));
         return resourceTreeList;
+    }
+
+    @RequestMapping(value = "getChilds/{pid}",method = RequestMethod.GET) @ResponseBody
+    public Object getByPId(@PathVariable("pid")Integer pid){
+        Resource res = new Resource();
+        res.setPid(pid);
+        return resService.getList(res);
     }
 
     @RequestMapping(value = "del/{id}",method = RequestMethod.GET) @ResponseBody
