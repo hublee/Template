@@ -131,22 +131,6 @@ public class AttachmentServiceImpl extends BaseServiceImpl<AttachmentMapper,Atta
         return attachments;
     }
 
-    @Override
-    public List<Attachment> getListByIds(List<Integer> ids) {
-        return this.mapper.selectListByIds(ids);
-    }
-
-    @Override
-    public List<Attachment> getBySourceIdAndEntity(List<Integer> sourceIds, String entity) {
-        return this.mapper.selectBySourceIdAndEntity(sourceIds,entity);
-    }
-
-    @Override
-    public List<Attachment> getBySourceIdAndEntityAndType(List<Integer> sourceIds, String entity, String type) {
-        if(StringUtils.isBlank(type)) return getBySourceIdAndEntity(sourceIds,entity);
-        return this.mapper.selectBySourceIdAndEntityAndType(sourceIds, entity, type);
-    }
-
     @Override @Transactional(readOnly = false) @Logable(option = "下载")
     public void downLoad(Integer id, HttpServletResponse response) throws IOException {
         Attachment attachment = getById(id);
@@ -174,7 +158,10 @@ public class AttachmentServiceImpl extends BaseServiceImpl<AttachmentMapper,Atta
 
     @Override
     public Map<Integer, List<Attachment>> getAttachMap(List<Integer> sourceIds, String entity) {
-        List<Attachment> attachments = getBySourceIdAndEntity(sourceIds,entity);
+        Attachment param = new Attachment();
+        param.setSourceIds(sourceIds);
+        param.setSourceEntity(entity);
+        List<Attachment> attachments = getList(param);
         Map<Integer,List<Attachment>> attachMap = new HashMap<>();
 
         if(null != attachments && attachments.size() > 0){

@@ -62,18 +62,17 @@ public abstract class BaseServiceImpl<D extends Mapper<T>,T> implements BaseServ
         //方式一
         //TODO 看分页插件源码
         PageHelper.startPage(pageNo, pageSize);
-        //如果属性类型是 string ，则统一使用模糊查询
         Example example = new Example(t.getClass());
         Example.Criteria criteria = example.createCriteria();
         try {
             List<Field> persistFields = ReflectUtil.getPersistFields(t.getClass());
             List<Field> fieldList = ReflectUtil.getWithValueNotNull(t, persistFields);
             for(Field field : fieldList){
-                if(field.getType() == String.class){
-                    criteria.andLike(field.getName(), "%"+field.get(t)+"%");
-                }else{
+//                if(field.getType() == String.class){ //如果属性类型是 string ，则统一使用模糊查询
+//                    criteria.andLike(field.getName(), "%"+field.get(t)+"%");
+//                }else{
                     criteria.andEqualTo(field.getName(),field.get(t));
-                }
+//                }
             }
 
             //in查询参数
@@ -131,18 +130,17 @@ public abstract class BaseServiceImpl<D extends Mapper<T>,T> implements BaseServ
             e.printStackTrace();
             log.error("分页查询失败",e);
         }
-        //如果属性类型是 string ，则统一使用模糊查询
         Example example = new Example(t.getClass());
         Example.Criteria criteria = example.createCriteria();
         try {
             List<Field> persistFields = ReflectUtil.getPersistFields(t.getClass());
             List<Field> fieldList = ReflectUtil.getWithValueNotNull(t, persistFields);
             for(Field field : fieldList){
-                if(field.getType() == String.class){
-                    criteria.andLike(field.getName(), "%"+field.get(t)+"%");
-                }else{
+//                if(field.getType() == String.class){  //如果属性类型是 string ，则统一使用模糊查询
+//                    criteria.andLike(field.getName(), "%"+field.get(t)+"%");
+//                }else{
                     criteria.andEqualTo(field.getName(),field.get(t));
-                }
+//                }
             }
             //in查询参数
             List<Field> paramFields = ReflectUtil.getParamableFields(t.getClass());

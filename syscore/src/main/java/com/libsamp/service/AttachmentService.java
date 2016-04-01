@@ -29,12 +29,6 @@ public interface AttachmentService extends BaseService<Attachment> {
      */
     List<Attachment> appUpload(HttpServletRequest request, String dest) throws IOException;
 
-    List<Attachment> getListByIds(List<Integer> ids);
-
-    List<Attachment> getBySourceIdAndEntity(List<Integer> sourceIds, String entity);
-
-    List<Attachment> getBySourceIdAndEntityAndType(List<Integer> sourceIds, String entity, String type);
-
     /**
      * 下载文件接口
      * @param id

@@ -13,12 +13,6 @@ import java.util.List;
  */
 public interface RoleMapper extends MyMapper<Role> {
 
-    @Delete("delete from t_user_role where user_id = #{userId}")
-    void emptyRoleByUserId(@Param("userId")Integer userId);
-
-    @Delete("delete from t_role_resource where role_id = #{roleId}")
-    void emptyResByRole(@Param("roleId")Integer roleId);
-
     @Select("select r.* from t_role r inner join t_user_role u on(r.id=u.role_id) where u.user_id = #{userId}")
     List<Role> getRolesByUserId(Integer userId);
 

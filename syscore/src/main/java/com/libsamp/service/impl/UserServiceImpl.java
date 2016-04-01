@@ -81,7 +81,8 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper,User> implements
 
     @Override
     public Map<Integer, Attachment> getIconMap(List<Integer> ids) {
-        List<Attachment> usAttaches = attachmentService.getBySourceIdAndEntity(ids,User.class.getName());
+        Attachment param = new Attachment(User.class.getName(),ids);
+        List<Attachment> usAttaches = attachmentService.getList(param);
         Map<Integer,Attachment> iconMap = new HashMap<>();
         for(Attachment atta : usAttaches){
             if(!User.FileType.icon.equals(atta.getSourceType())) continue;

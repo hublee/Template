@@ -54,7 +54,9 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper,Role> implements
 
     @Transactional(readOnly = false)
     public void emptyRoleByUserId(Integer userId){
-        mapper.emptyRoleByUserId(userId);
+        UserRole param = new UserRole();
+        param.setUserId(userId);
+        userRoleMapper.delete(param);
     }
 
 
@@ -69,7 +71,6 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper,Role> implements
             rr = new RoleResource(roleId,resId);
             roleResourceList.add(rr);
         }
-//        mapper.insertBatchRes(roleResourceList);
         roleResourceMapper.insertList(roleResourceList);
 
     }
@@ -77,7 +78,9 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper,Role> implements
 
     @Transactional(readOnly = false)
     public void emptyResByRole(Integer roleId){
-        mapper.emptyResByRole(roleId);
+        RoleResource roleResource = new RoleResource();
+        roleResource.setRoleId(roleId);
+        roleResourceMapper.delete(roleResource);
     }
 
     @Override

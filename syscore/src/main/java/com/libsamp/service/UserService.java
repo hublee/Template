@@ -39,7 +39,7 @@ public interface UserService extends BaseService<User> {
 
     /**
      * 用户头像map
-     * @param ids
+     * @param ids 文件id
      * @return
      */
     Map<Integer,Attachment> getIconMap(List<Integer> ids);

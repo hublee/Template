@@ -14,12 +14,4 @@ import java.util.List;
  */
 public interface AttachmentMapper extends MyMapper<Attachment> {
 
-    List<Attachment> selectListByIds(List<Integer> ids);
-
-    @SelectProvider(type = AttachmentSqlProvider.class,method = "getBySourceIdAndEntity")
-    List<Attachment> selectBySourceIdAndEntity(@Param("sourceIds")List<Integer> sourceIds,@Param("entity")String entity);
-
-    @SelectProvider(type = AttachmentSqlProvider.class,method = "getBySourceIdAndEntity")
-    List<Attachment> selectBySourceIdAndEntityAndType(@Param("sourceIds")List<Integer> sourceIds,
-                                                      @Param("entity")String entity,@Param("type")String type);
 }

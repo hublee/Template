@@ -58,7 +58,8 @@ public class UserController {
 
             List<Integer> sourceIds = new ArrayList<>();
             sourceIds.add(id);
-            List<Attachment> attachments = attachService.getBySourceIdAndEntity(sourceIds, User.class.getName());
+            Attachment param = new Attachment(User.class.getName(),sourceIds);
+            List<Attachment> attachments = attachService.getList(param);
             if (attachments.size() > 0) {
                 ObjectMapper om = new ObjectMapper();
                 List<String> icon = null;

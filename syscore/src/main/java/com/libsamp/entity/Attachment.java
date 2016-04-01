@@ -1,7 +1,11 @@
 package com.libsamp.entity;
 
 
+import com.libsamp.annotation.Paramable;
+
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import java.util.List;
 
 /**
  * Created by hlib on 2015/8/14 0014.
@@ -19,6 +23,22 @@ public class Attachment extends BaseEntity{
     private Long downCount; //下载次数
     private String descr; //附件描述
     private String privateAttr; //存放附件的一些私有属性（json格式）
+
+    @Transient
+    @Paramable
+    private List<Integer> ids;
+
+    @Transient
+    @Paramable
+    private List<Integer> sourceIds;
+
+    public Attachment() {
+    }
+
+    public Attachment(String sourceEntity, List<Integer> sourceIds) {
+        this.sourceEntity = sourceEntity;
+        this.sourceIds = sourceIds;
+    }
 
     public String getName() {
         return name;
@@ -106,5 +126,21 @@ public class Attachment extends BaseEntity{
 
     public void setPrivateAttr(String privateAttr) {
         this.privateAttr = privateAttr;
+    }
+
+    public List<Integer> getIds() {
+        return ids;
+    }
+
+    public void setIds(List<Integer> ids) {
+        this.ids = ids;
+    }
+
+    public List<Integer> getSourceIds() {
+        return sourceIds;
+    }
+
+    public void setSourceIds(List<Integer> sourceIds) {
+        this.sourceIds = sourceIds;
     }
 }
