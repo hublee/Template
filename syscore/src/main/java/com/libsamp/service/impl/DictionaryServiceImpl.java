@@ -66,7 +66,7 @@ public class DictionaryServiceImpl extends BaseServiceImpl<DictionaryMapper,Dict
     }
 
     @Override
-    @Transactional(readOnly = false) @Logable(option = "删除数据字典")
+    @Transactional(readOnly = false) @Logable(option = "删除")
     public void deleteById(Integer id) {
         //删除子节点
         Example example = new Example(Dictionary.class);
