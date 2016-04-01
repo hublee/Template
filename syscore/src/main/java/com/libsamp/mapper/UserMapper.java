@@ -2,17 +2,16 @@ package com.libsamp.mapper;
 
 
 import com.libsamp.entity.User;
+import com.libsamp.util.MyMapper;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
-import org.springframework.stereotype.Repository;
-import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
 
 /**
  * Created by hlib on 2015/8/6 0006.
  */
-public interface UserMapper extends Mapper<User> {
+public interface UserMapper extends MyMapper<User> {
 
     @Select("select * from t_user where name = #{name}")
     @Results(value = {

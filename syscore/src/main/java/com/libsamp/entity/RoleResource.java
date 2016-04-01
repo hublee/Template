@@ -1,8 +1,11 @@
 package com.libsamp.entity;
 
+import javax.persistence.Table;
+
 /**
  * Created by hlib on 2015/8/11 0011.
  */
+@Table(name = "t_role_resource")
 public class RoleResource {
 
     private Integer roleId;

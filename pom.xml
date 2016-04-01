@@ -35,7 +35,7 @@
         <aopalliance.version>1.0</aopalliance.version>
         <jackson.version>2.6.0</jackson.version>
         <entitymapper.version>1.0.0</entitymapper.version>
-        <mapper.version>3.3.0</mapper.version>
+        <mapper.version>3.3.8</mapper.version>
         <jsqlparser.version>0.9.1</jsqlparser.version>
         <!--<pagehelper.version>3.7.6</pagehelper.version>-->
         <pagehelper.version>4.0.0</pagehelper.version>

@@ -4,6 +4,8 @@ import com.libsamp.dto.EasyuiTree;
 import com.libsamp.dto.ResourceTree;
 import com.libsamp.entity.*;
 import com.libsamp.mapper.RoleMapper;
+import com.libsamp.mapper.RoleResourceMapper;
+import com.libsamp.mapper.UserRoleMapper;
 import com.libsamp.service.ResourceService;
 import com.libsamp.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,12 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper,Role> implements
 
     @Autowired
     private ResourceService resService;
+
+    @Autowired
+    private UserRoleMapper userRoleMapper;
+
+    @Autowired
+    private RoleResourceMapper roleResourceMapper;
 
     @Override
     @Transactional(readOnly = false) //开启事务
@@ -61,7 +69,9 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper,Role> implements
             rr = new RoleResource(roleId,resId);
             roleResourceList.add(rr);
         }
-        mapper.insertBatchRes(roleResourceList);
+//        mapper.insertBatchRes(roleResourceList);
+        roleResourceMapper.insertList(roleResourceList);
+
     }
 
 
@@ -144,7 +154,8 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper,Role> implements
 
     @Override @Transactional(readOnly = false)
     public void insertBatchRole(List<UserRole> userRoleList) {
-        mapper.insertBatchRole(userRoleList);
+//        mapper.insertBatchRole(userRoleList);
+        userRoleMapper.insertList(userRoleList);
     }
 
     @Override

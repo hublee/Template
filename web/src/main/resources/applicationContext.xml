@@ -64,7 +64,7 @@
         <property name="basePackage" value="com.libsamp.mapper"/>
         <property name="properties">
             <value>
-                mappers=tk.mybatis.mapper.common.Mapper
+                mappers=com.libsamp.util.MyMapper
             </value>
         </property>
     </bean>
