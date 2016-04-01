@@ -33,6 +33,7 @@
                 queryParams:function(params){
                     params.page = params.pageNumber;
                     params.rows = params.pageSize;
+                    params.order = " create_time DESC ";
                     if(params.searchText) {
                         params.name = params.searchText;
                     }

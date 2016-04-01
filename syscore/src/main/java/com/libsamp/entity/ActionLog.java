@@ -13,6 +13,8 @@ public class ActionLog extends BaseEntity{
     @Transient
     private String userName;
 
+    @Transient
+    private Integer isEnable; //用户是否有效
     private String busId;
     private String busName;
     private String entityClass;
@@ -68,4 +70,11 @@ public class ActionLog extends BaseEntity{
         this.userName = userName;
     }
 
+    public Integer getIsEnable() {
+        return isEnable;
+    }
+
+    public void setIsEnable(Integer isEnable) {
+        this.isEnable = isEnable;
+    }
 }

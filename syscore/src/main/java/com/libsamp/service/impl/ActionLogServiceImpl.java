@@ -1,18 +1,13 @@
 package com.libsamp.service.impl;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.libsamp.entity.ActionLog;
 import com.libsamp.mapper.ActionLogMapper;
 import com.libsamp.service.ActionLogService;
-import com.libsamp.service.UserService;
 import com.libsamp.util.Page;
 import com.libsamp.util.SystemUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 
 /**
@@ -26,9 +21,6 @@ public class ActionLogServiceImpl extends BaseServiceImpl<ActionLogMapper,Action
         this.mapper = mapper;
     }
 
-    @Autowired
-    private UserService userService;
-
     /**
      * 重写父类insert方法 避免记录日志造成死循环
      * @param vo
@@ -36,8 +28,7 @@ public class ActionLogServiceImpl extends BaseServiceImpl<ActionLogMapper,Action
      */
     @Override @Transactional(readOnly = false)
     public ActionLog add(ActionLog vo){
-        mapper.insert(vo);
-        return vo;
+        return super.add(vo);
     }
 
     /**
@@ -58,9 +49,10 @@ public class ActionLogServiceImpl extends BaseServiceImpl<ActionLogMapper,Action
 
     @Override
     public Page<ActionLog> getListByPage(ActionLog actionLog, int pageNo, int pageSize) {
-        PageHelper.startPage(pageNo,pageSize);
-        List<ActionLog> actionLogList = mapper.getListByJoin(actionLog);
-        PageInfo pageInfo = new PageInfo(actionLogList);
-        return new Page<>(actionLogList,Long.valueOf(pageInfo.getTotal()).intValue(),pageNo,pageSize);
+//        PageHelper.startPage(pageNo,pageSize);
+//        List<ActionLog> actionLogList = mapper.getListByJoin(actionLog);
+//        PageInfo pageInfo = new PageInfo(actionLogList);
+//        return new Page<>(actionLogList,Long.valueOf(pageInfo.getTotal()).intValue(),pageNo,pageSize);
+        return super.getListByPage(actionLog,pageNo,pageSize);
     }
 }
