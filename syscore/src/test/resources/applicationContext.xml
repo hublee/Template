@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xmlns="http://www.springframework.org/schema/beans" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+                        http://www.springframework.org/schema/aop
+                        http://www.springframework.org/schema/aop/spring-aop.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context-4.0.xsd
+                        http://www.springframework.org/schema/tx
+                        http://www.springframework.org/schema/tx/spring-tx.xsd
+                        http://www.springframework.org/schema/task
+                        http://www.springframework.org/schema/task/spring-task-4.0.xsd"
+       default-lazy-init="true">
+
+    <description>Spring公共配置</description>
+
+    <!-- 使用annotation 自动注册bean, 并保证@Required、@Autowired的属性被注入 -->
+    <context:component-scan base-package="com.libsamp.service">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+        <context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice" />
+    </context:component-scan>
+
+    <!-- 读取配置文件  ignore-unresolvable 为true时可以配置多个context:property-placeholder加载多个properties配置文件-->
+	<context:property-placeholder location="classpath*:/db.properties" ignore-unresolvable="false"/>
+
+    <!--  c3p0数据源-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <!--<property name="driverClass" value="${jdbc.sqlserver.driver}"/>
+        <property name="jdbcUrl" value="${jdbc.sqlserver.url}"/>
+        <property name="user" value="${jdbc.sqlserver.username}"/>
+        <property name="password" value="${jdbc.sqlserver.password}"/>-->
+        <property name="driverClass" value="${jdbc.driver}"/>
+        <property name="jdbcUrl" value="${jdbc.url}"/>
+        <property name="user" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="configLocation" value="classpath:mybatis-config.xml" />
+        <property name="dataSource" ref="dataSource" />
+        <property name="mapperLocations">
+            <list>
+                <value>classpath*:**/sql/*Mapping.xml</value>
+            </list>
+        </property>
+        <!--mybatis 分页插件-->
+        <!--参考文档  http://git.oschina.net/free/Mybatis_PageHelper/blob/master/wikis/HowToUse.markdown-->
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageHelper">
+                    <property name="properties">
+                        <value>dialect=mysql</value>
+                        <!--<value>dialect=sqlserver</value>-->
+                    </property>
+                </bean>
+            </array>
+        </property>
+    </bean>
+
+    <bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.libsamp.mapper"/>
+        <!--<property name="markerInterface" value="tk.mybatis.mapper.common.Mapper"/>-->
+        <property name="properties">
+            <value>
+                mappers=tk.mybatis.mapper.common.Mapper
+            </value>
+        </property>
+    </bean>
+
+    <!--<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.libsamp.mapper" />
+    </bean>-->
+
+    <!--spring声明式事务管理-->
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <tx:annotation-driven transaction-manager="txManager"/>
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+
+     <!-- 全局异常配置 -->
+     <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+         <property name="exceptionMappings">
+             <props>
+                 <prop key="java.lang.Exception">errors/500</prop>
+                 <prop key="java.lang.Throwable">errors/500</prop>
+             </props>
+         </property>
+         <property name="statusCodes">
+             <props>
+                 <prop key="errors/500">500</prop>
+             </props>
+         </property>
+         <!-- 设置日志输出级别，不定义则默认不输出警告等错误日志信息 -->
+         <property name="warnLogCategory" value="WARN"></property>
+         <!-- 默认错误页面，当找不到上面mappings中指定的异常对应视图时，使用本默认配置 -->
+         <property name="defaultErrorView" value="errors/500"></property>
+         <!-- 默认HTTP状态码 -->
+         <property name="defaultStatusCode" value="500"></property>
+     </bean>
+
+    <!--<bean id="schedulerFactoryBean"  class="org.springframework.scheduling.quartz.SchedulerFactoryBean" />-->
+
+    <!-- local development环境 -->
+    <!--<beans profile="development">-->
+        <!--<context:property-placeholder ignore-resource-not-found="true" location="classpath*:application.properties" />-->
+        <!-- Tomcat JDBC连接池 -->
+        <!--<bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
+            <property name="driverClassName" value="${jdbc.driver}" />
+            <property name="url" value="${jdbc.url}" />
+            <property name="username" value="${jdbc.username}" />
+            <property name="password" value="${jdbc.password}" />
+            <property name="defaultAutoCommit" value="false" />
+        </bean>-->
+    <!--</beans>-->
+
+</beans>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+	version="2.0">
+	
+	<description>JSTL_ZEUS_FUNCTION</description>
+	<tlib-version>2.0</tlib-version>
+	<short-name>zfn</short-name>
+	<uri>http://www.zeus.com/zeusFunction</uri>
+	
+
+	<function>
+		<description>getDicMap</description>
+		<name>getDicMap</name>
+		<function-class>com.libsamp.util.DicUtil</function-class>
+		<function-signature>java.util.Map getDicMap(java.lang.String)</function-signature>
+		<example>${zfn:getDicMap(key)}</example>
+	</function>
+
+	<function>
+		<description>getDicName</description>
+		<name>getDicName</name>
+		<function-class>com.libsamp.util.DicUtil</function-class>
+		<function-signature>java.lang.String getDicName(java.lang.String,java.lang.String)</function-signature>
+		<example>${zfn:getDicName(key1,key2)}</example>
+	</function>
+
+	<function>
+		<description>getDicJsonMap</description>
+		<name>getDicJsonMap</name>
+		<function-class>com.libsamp.util.DicUtil</function-class>
+		<function-signature>java.lang.String getDicJsonMap(java.lang.String)</function-signature>
+		<example>${zfn:getDicJsonMap(key)}</example>
+	</function>
+
+
+</taglib>
+
