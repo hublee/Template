@@ -2,7 +2,6 @@ package com.libsamp.service;
 
 import com.libsamp.entity.Attachment;
 import com.libsamp.entity.User;
-import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 import java.util.Map;
@@ -11,8 +10,6 @@ import java.util.Map;
  * Created by hlib on 2015/8/6 0006.
  */
 public interface UserService extends BaseService<User> {
-
-    User getByName(String name);
 
     User disableUser(Integer id, Integer isEnable) throws Exception;
 
@@ -29,8 +26,6 @@ public interface UserService extends BaseService<User> {
      * @return
      */
     Boolean isExistEmail(String email);
-
-    void updateIntegral(Integer userId, Integer changedValue);
 
     List<User> getUserByRoleCode(String roleCode);
 

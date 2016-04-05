@@ -24,18 +24,18 @@ import java.util.List;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class UserTest {
 
-    @Autowired
-    private DictionaryMapper dicMapper;
+//    @Autowired
+//    private DictionaryMapper dicMapper;
 
-    @Autowired
-    private UserMapper userMapper;
+//    @Autowired
+//    private UserMapper userMapper;
 
     @Test
     public void getUser(){
 
-        User user =  userMapper.selectByName("pppplib");
+//        User user =  userMapper.selectByName("pppplib");
 //        user = userMapper.selectByPrimaryKey(31);
-        System.out.println(user);
+//        System.out.println(user);
 
     }
 

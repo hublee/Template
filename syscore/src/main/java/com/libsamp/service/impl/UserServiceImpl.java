@@ -32,10 +32,6 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper,User> implements
         this.mapper = mapper;
         this.busName = "用户";
     }
-    @Override
-    public User getByName(String name) {
-        return mapper.selectByName(name);
-    }
 
     @Override @Transactional(readOnly = false) @Logable(option = "封禁/解封")
     public User disableUser(Integer id,Integer isEnable) throws Exception{
@@ -47,17 +43,14 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper,User> implements
 
     @Override
     public Boolean isExistName(String userName) {
-        return mapper.isExistName(userName) > 0 ? true : false;
+        return mapper.selectCount(new User(userName)) > 0 ? true : false;
     }
 
     @Override
     public Boolean isExistEmail(String email) {
-        return mapper.isExistEmail(email) > 0 ? true : false;
-    }
-
-    @Override @Transactional(readOnly = false)
-    public void updateIntegral(Integer userId, Integer changedValue) {
-        mapper.updateIntegral(userId,changedValue);
+        User user = new User();
+        user.setEmail(email);
+        return mapper.selectCount(user) > 0 ? true : false;
     }
 
     public Map<String, Object> getTokenMap() {

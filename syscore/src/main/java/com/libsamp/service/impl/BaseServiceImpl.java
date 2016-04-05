@@ -310,8 +310,11 @@ public abstract class BaseServiceImpl<D extends Mapper<T>,T> implements BaseServ
             log.error("批量删除失败",e);
             e.printStackTrace();
         }
+    }
 
-
+    @Override
+    public T getOneByExample(T t) {
+        return mapper.selectOne(t);
     }
 
     public abstract void setMapper(D mapper);

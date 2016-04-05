@@ -42,6 +42,10 @@ public class User extends BaseEntity{
     public User() {
     }
 
+    public User(String name) {
+        this.name = name;
+    }
+
     public User(ShiroUser shiroUser) {
         this.id = shiroUser.getId();
         this.name = shiroUser.getName();

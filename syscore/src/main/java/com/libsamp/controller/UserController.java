@@ -122,7 +122,7 @@ public class UserController {
     @RequestMapping(value = "changePwd",method = RequestMethod.POST) @ResponseBody
     public StatusDTO changePwd(User user){
         try {
-            User cuser = userService.getByName(SystemUtil.currentUser().getName());
+            User cuser = userService.getOneByExample(new User(SystemUtil.currentUser().getName()));
             if (cuser.getPassword().equals(new Md5Hash(user.getPassword()).toBase64())) {
                 cuser.setPassword(new Md5Hash(user.getNewPwd()).toBase64());
                 userService.save(cuser);

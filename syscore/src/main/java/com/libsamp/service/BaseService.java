@@ -62,4 +62,11 @@ public interface BaseService<T> {
      */
     void deleteByIds(List<Integer> ids);
 
+    /**
+     * 根据条件查询单条记录
+     * @param t
+     * @return
+     */
+    T getOneByExample(T t);
+
 }
